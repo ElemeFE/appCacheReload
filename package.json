@@ -1,0 +1,12 @@
+{
+  "name": "appCacheReload",
+  "version": "1.0.2",
+  "description": "reload file immediately when timeout",
+  "main": "index.js",
+  "repository": "",
+  "keywords": [
+      "appCache applicationCache reload"
+  ],
+  "author": "Hao Yao",
+  "license": "BSD"
+}
