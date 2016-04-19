@@ -1,28 +1,45 @@
-var setReload = function(time) {
-  if (!applicationCache) {
-    throw new Error('applicationCache not support');
+void function() {
+  var scriptEle = document.querySelector('script[app-cache-timeout]');
+  var time, key;
+  
+  if (!scriptEle) {
+    console.error('script with app-cache-timeout attribute not found');
+  } else {
+    time = parseInt(scriptEle.getAttribute('app-cache-timeout'));
+    key = scriptEle.getAttribute('app-cache-timeout-key');
   }
 
-  applicationCache.addEventListener('cached', function () {
-    try {
-      localStorage.setItem('manifest:cached', Date.now());
-    } catch {
+  if (!window.applicationCache) {
+    console.error('applicationCache not support');
+    return;
+  }
 
+  key = key || 'manifest:timestemp';
+
+  window.applicationCache.addEventListener('cached', function () {
+    try {
+      window.localStorage.setItem(key, Date.now());
+    } catch (e) {
+      return;
     }
   });
 
   applicationCache.addEventListener('updateready', function () {
-    if (applicationCache.status === applicationCache.UPDATEREADY) {
-      
+    if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
       try {
-        var diff = Date.now() - localStorage.getItem('manifest:cached');
-        localStorage.setItem('manifest:cached', Date.now());
-      } catch {
-        
+        var diff = Date.now() - localStorage.getItem(key);
+      } catch (e) {
+        return;
       }
-      applicationCache.swapCache();
-      location.reload();
+      try {
+        window.localStorage.setItem(key, Date.now());
+      } catch (e) {
+        return;
+      }
+      if (diff > time) {
+        window.applicationCache.swapCache();
+        window.location.reload();
+      }
     }
   });
-};
-
+}();
