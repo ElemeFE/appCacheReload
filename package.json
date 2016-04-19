@@ -1,7 +1,7 @@
 {
   "name": "appCacheReload",
-  "version": "1.0.2",
-  "description": "reload file immediately when timeout",
+  "version": "0.1",
+  "description": "reload files immediately when timeout",
   "main": "index.js",
   "repository": "",
   "keywords": [

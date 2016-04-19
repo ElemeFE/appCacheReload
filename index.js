@@ -1,7 +1,7 @@
 void function() {
   var scriptEle = document.querySelector('script[app-cache-timeout]');
   var time, key;
-  
+
   if (!scriptEle) {
     console.error('script with app-cache-timeout attribute not found');
   } else {
@@ -14,7 +14,7 @@ void function() {
     return;
   }
 
-  key = key || 'manifest:timestemp';
+  key = key || 'appCache:timeout';
 
   window.applicationCache.addEventListener('cached', function () {
     try {
